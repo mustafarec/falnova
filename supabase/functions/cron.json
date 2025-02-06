@@ -1,0 +1,10 @@
+{
+  "jobs": [
+    {
+      "name": "check_scheduled_notifications",
+      "schedule": "* * * * *",
+      "function": "check-scheduled-notifications",
+      "description": "Her dakika planlanan bildirimleri kontrol et ve gönder"
+    }
+  ]
+} 

@@ -1,0 +1,4 @@
+# Her dakika çalışacak şekilde ayarla
+[functions.send-scheduled-notifications.schedule]
+cron = "* * * * *" # Her dakika
+enabled = true

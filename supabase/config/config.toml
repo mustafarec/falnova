@@ -1,0 +1,10 @@
+# This file controls the behavior of Supabase CLI
+
+[functions]
+[functions.send-scheduled-notifications]
+verify_jwt = false
+import_map = "./import_map.json"
+
+[functions.send-scheduled-notifications.schedule]
+cron = "* * * * *" # Her dakika çalışacak
+enabled = true
