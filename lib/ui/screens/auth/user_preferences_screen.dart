@@ -29,7 +29,7 @@ class UserPreferencesScreen extends HookConsumerWidget {
         _logger.d('Kullanıcı tercihleri kaydediliyor...');
 
         // Önce mevcut geçici verileri kontrol et
-        final existingData = await prefsService.getTempUserData();
+        final existingData = prefsService.getTempUserData();
         if (existingData == null ||
             existingData['email'] == null ||
             existingData['password'] == null) {
@@ -46,7 +46,7 @@ class UserPreferencesScreen extends HookConsumerWidget {
         await prefsService.updateTempUserData(preferences);
 
         // Güncel verileri al
-        final tempUserData = await prefsService.getTempUserData();
+        final tempUserData = prefsService.getTempUserData();
         if (tempUserData == null) {
           throw Exception('Geçici kullanıcı verileri bulunamadı');
         }

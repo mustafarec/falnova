@@ -15,6 +15,18 @@ _$HoroscopeImpl _$$HoroscopeImplFromJson(Map<String, dynamic> json) =>
       luckNumber: json['luckNumber'] as String?,
       luckColor: json['luckColor'] as String?,
       isPremium: json['isPremium'] as bool? ?? false,
+      transitAspects: (json['transitAspects'] as List<dynamic>?)
+              ?.map((e) => TransitAspect.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      luckyHours: (json['luckyHours'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      highlights: (json['highlights'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$HoroscopeImplToJson(_$HoroscopeImpl instance) =>
@@ -26,4 +38,7 @@ Map<String, dynamic> _$$HoroscopeImplToJson(_$HoroscopeImpl instance) =>
       'luckNumber': instance.luckNumber,
       'luckColor': instance.luckColor,
       'isPremium': instance.isPremium,
+      'transitAspects': instance.transitAspects,
+      'luckyHours': instance.luckyHours,
+      'highlights': instance.highlights,
     };

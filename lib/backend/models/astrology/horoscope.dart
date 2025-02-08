@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:falnova/backend/models/astrology/transit_aspect.dart';
 
 part 'horoscope.freezed.dart';
 part 'horoscope.g.dart';
@@ -13,6 +14,9 @@ class Horoscope with _$Horoscope {
     String? luckNumber,
     String? luckColor,
     @Default(false) bool isPremium,
+    @Default([]) List<TransitAspect> transitAspects,
+    @Default([]) List<String> luckyHours,
+    @Default([]) List<String> highlights,
   }) = _Horoscope;
 
   factory Horoscope.fromJson(Map<String, dynamic> json) =>

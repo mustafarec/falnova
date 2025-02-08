@@ -23,7 +23,7 @@ final zodiacServiceProvider = AutoDisposeProvider<ZodiacService>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ZodiacServiceRef = AutoDisposeProviderRef<ZodiacService>;
-String _$ascendantSignHash() => r'9c4b8d2a5bb571ed6b6ceb675902e3f2dd6c7850';
+String _$ascendantSignHash() => r'5f2ac821525e12307466666cd78a40d8e462fd57';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -207,7 +207,7 @@ class _AscendantSignProviderElement
   double get longitude => (origin as AscendantSignProvider).longitude;
 }
 
-String _$moonSignHash() => r'45922e604868f76aaab22594141b684231adaecd';
+String _$moonSignHash() => r'912122333562b184b83436bf0e5df4f52c36d319';
 
 /// See also [moonSign].
 @ProviderFor(moonSign)
@@ -334,6 +334,155 @@ class _MoonSignProviderElement extends AutoDisposeFutureProviderElement<String>
 
   @override
   DateTime get birthDate => (origin as MoonSignProvider).birthDate;
+}
+
+String _$zodiacCompatibilityHash() =>
+    r'9c46da8f9dc234d00c3c6dee642f116e7b3a4234';
+
+/// See also [zodiacCompatibility].
+@ProviderFor(zodiacCompatibility)
+const zodiacCompatibilityProvider = ZodiacCompatibilityFamily();
+
+/// See also [zodiacCompatibility].
+class ZodiacCompatibilityFamily extends Family<AsyncValue<double>> {
+  /// See also [zodiacCompatibility].
+  const ZodiacCompatibilityFamily();
+
+  /// See also [zodiacCompatibility].
+  ZodiacCompatibilityProvider call({
+    required String sign1,
+    required String sign2,
+  }) {
+    return ZodiacCompatibilityProvider(
+      sign1: sign1,
+      sign2: sign2,
+    );
+  }
+
+  @override
+  ZodiacCompatibilityProvider getProviderOverride(
+    covariant ZodiacCompatibilityProvider provider,
+  ) {
+    return call(
+      sign1: provider.sign1,
+      sign2: provider.sign2,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'zodiacCompatibilityProvider';
+}
+
+/// See also [zodiacCompatibility].
+class ZodiacCompatibilityProvider extends AutoDisposeFutureProvider<double> {
+  /// See also [zodiacCompatibility].
+  ZodiacCompatibilityProvider({
+    required String sign1,
+    required String sign2,
+  }) : this._internal(
+          (ref) => zodiacCompatibility(
+            ref as ZodiacCompatibilityRef,
+            sign1: sign1,
+            sign2: sign2,
+          ),
+          from: zodiacCompatibilityProvider,
+          name: r'zodiacCompatibilityProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$zodiacCompatibilityHash,
+          dependencies: ZodiacCompatibilityFamily._dependencies,
+          allTransitiveDependencies:
+              ZodiacCompatibilityFamily._allTransitiveDependencies,
+          sign1: sign1,
+          sign2: sign2,
+        );
+
+  ZodiacCompatibilityProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.sign1,
+    required this.sign2,
+  }) : super.internal();
+
+  final String sign1;
+  final String sign2;
+
+  @override
+  Override overrideWith(
+    FutureOr<double> Function(ZodiacCompatibilityRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ZodiacCompatibilityProvider._internal(
+        (ref) => create(ref as ZodiacCompatibilityRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        sign1: sign1,
+        sign2: sign2,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<double> createElement() {
+    return _ZodiacCompatibilityProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ZodiacCompatibilityProvider &&
+        other.sign1 == sign1 &&
+        other.sign2 == sign2;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, sign1.hashCode);
+    hash = _SystemHash.combine(hash, sign2.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ZodiacCompatibilityRef on AutoDisposeFutureProviderRef<double> {
+  /// The parameter `sign1` of this provider.
+  String get sign1;
+
+  /// The parameter `sign2` of this provider.
+  String get sign2;
+}
+
+class _ZodiacCompatibilityProviderElement
+    extends AutoDisposeFutureProviderElement<double>
+    with ZodiacCompatibilityRef {
+  _ZodiacCompatibilityProviderElement(super.provider);
+
+  @override
+  String get sign1 => (origin as ZodiacCompatibilityProvider).sign1;
+  @override
+  String get sign2 => (origin as ZodiacCompatibilityProvider).sign2;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

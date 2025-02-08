@@ -1,102 +1,158 @@
-You are an expert in Flutter, Dart, Riverpod, Freezed, Flutter Hooks, and Supabase.
+# FalNova Cursor Kuralları
 
-Key Principles
-- Write concise, technical Dart code with accurate examples.
-- Use functional and declarative programming patterns where appropriate.
-- Prefer composition over inheritance.
-- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
-- Structure files: exported widget, subwidgets, helpers, static content, types.
+## 📱 Genel Kurallar
 
-Project Structure
-- Organize code into UI and Backend layers:
-  ```
-  lib/
+1. Her dosya UTF-8 ile kodlanmalı
+2. Her dosya newline ile bitmeli
+3. Satır uzunluğu maksimum 80 karakter olmalı
+4. Girintiler 2 boşluk kullanmalı
+5. Trailing whitespace olmamalı
+
+## 🎨 Kod Stili
+
+### Dart/Flutter
+- const constructor kullanımı zorunlu
+- final değişkenler tercih edilmeli
+- Tek satırlık fonksiyonlarda => kullanılmalı
+- Trailing comma kullanılmalı
+- Freezed için @freezed annotation kullanılmalı
+- JsonSerializable için snake_case kullanılmalı
+
+### Riverpod
+- @riverpod annotation kullanılmalı
+- StateProvider yerine AsyncNotifierProvider tercih edilmeli
+- ref.watch yerine ref.listen kullanılmalı
+- Asenkron işlemlerde AsyncValue kullanılmalı
+
+### Dosya Yapısı
+- lib/
   ├── ui/
-  │   ├── screens/         # Full page screens
-  │   ├── widgets/         # Reusable UI components
-  │   ├── theme/           # Theme and styling
-  │   └── utils/          # UI-related utilities
+  │   ├── screens/
+  │   ├── widgets/
+  │   ├── theme/
+  │   └── utils/
   │
   ├── backend/
-  │   ├── models/         # Data models and DTOs
-  │   ├── repositories/   # Data access layer
-  │   ├── services/       # Business logic and external services
-  │   └── utils/         # Backend utilities
+  │   ├── models/
+  │   ├── repositories/
+  │   ├── services/
+  │   └── utils/
   │
-  ├── core/              # Shared core functionality
-  │   ├── config/        # App configuration
-  │   ├── constants/     # App-wide constants
-  │   └── extensions/    # Dart extensions
+  ├── core/
+  │   ├── config/
+  │   ├── constants/
+  │   └── extensions/
   │
-  └── features/          # Feature-based modules
+  └── features/
       ├── auth/
       ├── fortune/
       ├── horoscope/
       └── payment/
-  ```
 
-Dart/Flutter
-- Use const constructors for immutable widgets.
-- Leverage Freezed for immutable state classes and unions.
-- Use arrow syntax for simple functions and methods.
-- Prefer expression bodies for one-line getters and setters.
-- Use trailing commas for better formatting and diffs.
+## 🔍 Kod İnceleme
+1. Linter kuralları kontrol edilmeli
+2. Test coverage %80'in üzerinde olmalı
+3. Performans metrikleri kontrol edilmeli
+4. Bellek sızıntıları kontrol edilmeli
 
-Error Handling and Validation
-- Implement error handling in views using SelectableText.rich instead of SnackBars.
-- Display errors in SelectableText.rich with red color for visibility.
-- Handle empty states within the displaying screen.
-- Use AsyncValue for proper error handling and loading states.
+## 🚀 Derleme ve Test
+1. Her PR öncesi testler çalıştırılmalı
+2. build_runner build --delete-conflicting-outputs çalıştırılmalı
+3. Flutter analyze temiz olmalı
+4. Flutter test başarılı olmalı
 
-Riverpod-Specific Guidelines
-- Use @riverpod annotation for generating providers.
-- Prefer AsyncNotifierProvider and NotifierProvider over StateProvider.
-- Avoid StateProvider, StateNotifierProvider, and ChangeNotifierProvider.
-- Use ref.invalidate() for manually triggering provider updates.
-- Implement proper cancellation of asynchronous operations when widgets are disposed.
+## 📝 Dokümantasyon
+1. Tüm public API'ler dokümante edilmeli
+2. README.md güncel tutulmalı
+3. CHANGELOG.md düzenli güncellenmeli
+4. Progress.md takip edilmeli
 
-Performance Optimization
-- Use const widgets where possible to optimize rebuilds.
-- Implement list view optimizations (e.g., ListView.builder).
-- Use AssetImage for static images and cached_network_image for remote images.
-- Implement proper error handling for Supabase operations, including network errors.
+## 🔒 Güvenlik
+1. API anahtarları .env dosyasında saklanmalı
+2. Hassas veriler şifrelenmeli
+3. Kullanıcı verileri güvenli şekilde saklanmalı
+4. Firebase güvenlik kuralları kontrol edilmeli
 
-Key Conventions
-1. Use GoRouter or auto_route for navigation and deep linking.
-2. Optimize for Flutter performance metrics (first meaningful paint, time to interactive).
-3. Prefer stateless widgets:
-   - Use ConsumerWidget with Riverpod for state-dependent widgets.
-   - Use HookConsumerWidget when combining Riverpod and Flutter Hooks.
+## 🎯 Performans
+1. Gereksiz build'ler önlenmeli
+2. Büyük asset'ler optimize edilmeli
+3. Lazy loading kullanılmalı
+4. Cache mekanizması implement edilmeli
 
-UI and Styling
-- Use Flutter's built-in widgets and create custom widgets.
-- Implement responsive design using LayoutBuilder or MediaQuery.
-- Use themes for consistent styling across the app.
-- Use Theme.of(context).textTheme.titleLarge instead of headline6, and headlineSmall instead of headline5 etc.
+## 🌐 Ağ İstekleri
+1. Timeout değerleri ayarlanmalı
+2. Retry mekanizması implement edilmeli
+3. Offline mod desteklenmeli
+4. API hataları düzgün yönetilmeli
 
-Model and Database Conventions
-- Include createdAt, updatedAt, and isDeleted fields in database tables.
-- Use @JsonSerializable(fieldRename: FieldRename.snake) for models.
-- Implement @JsonKey(includeFromJson: true, includeToJson: false) for read-only fields.
+## 📱 UI/UX
+1. Material 3 guideline takip edilmeli
+2. Dark/Light tema desteklenmeli
+3. Responsive tasarım uygulanmalı
+4. Accessibility desteklenmeli
 
-Widgets and UI Components
-- Create small, private widget classes instead of methods like Widget _build....
-- Implement RefreshIndicator for pull-to-refresh functionality.
-- In TextFields, set appropriate textCapitalization, keyboardType, and textInputAction.
-- Always include an errorBuilder when using Image.network.
+## 🔄 State Management
+1. Riverpod kullanılmalı
+2. AsyncValue ile hata yönetimi yapılmalı
+3. Provider scope optimize edilmeli
+4. State immutable olmalı
 
-Miscellaneous
-- Use log instead of print for debugging.
-- Use Flutter Hooks / Riverpod Hooks where appropriate.
-- Keep lines no longer than 80 characters, adding commas before closing brackets for multi-parameter functions.
-- Use @JsonValue(int) for enums that go to the database.
+## 📦 Paket Yönetimi
+1. Paket versiyonları sabitlenmeli
+2. Kullanılmayan paketler kaldırılmalı
+3. Paket güvenlik açıkları kontrol edilmeli
+4. Paket boyutları optimize edilmeli
 
-Code Generation
-- Utilize build_runner for generating code from annotations (Freezed, Riverpod, JSON serialization).
-- Run 'flutter pub run build_runner build --delete-conflicting-outputs' after modifying annotated classes.
+## 🧪 Test
+1. Unit testler yazılmalı
+2. Widget testleri yazılmalı
+3. Integration testler yazılmalı
+4. Golden testler kullanılmalı
 
-Documentation
-- Document complex logic and non-obvious code decisions.
-- Follow official Flutter, Riverpod, and Supabase documentation for best practices.
+## 🚀 CI/CD
+1. GitHub Actions kullanılmalı
+2. Otomatik versiyon artırımı yapılmalı
+3. Otomatik release notes oluşturulmalı
+4. Test coverage raporlanmalı
 
-Refer to Flutter, Riverpod, and Supabase documentation for Widgets, State Management, and Backend Integration best practices. 
+## 📈 Analytics
+1. Firebase Analytics kullanılmalı
+2. Crashlytics implement edilmeli
+3. Performance monitoring yapılmalı
+4. User engagement takip edilmeli
+
+## 🌍 Lokalizasyon
+1. easy_localization kullanılmalı
+2. Tüm stringler lokalize edilmeli
+3. RTL desteği sağlanmalı
+4. Tarih/saat formatları lokalize edilmeli
+
+## 🎨 Asset Yönetimi
+1. SVG tercih edilmeli
+2. Asset boyutları optimize edilmeli
+3. Font boyutları minimize edilmeli
+4. Image caching implement edilmeli
+
+## 🔐 Yetkilendirme
+1. Firebase Auth kullanılmalı
+2. Rol bazlı yetkilendirme yapılmalı
+3. Token yönetimi implement edilmeli
+4. Oturum güvenliği sağlanmalı
+
+## 💾 Veri Saklama
+1. Supabase kullanılmalı
+2. Offline storage implement edilmeli
+3. Cache stratejisi belirlenmeli
+4. Veri şifreleme uygulanmalı
+
+## 🚦 Hata Yönetimi
+1. Custom error handler kullanılmalı
+2. Hata mesajları lokalize edilmeli
+3. Retry mekanizması implement edilmeli
+4. Graceful degradation uygulanmalı
+
+## 📱 Platform Spesifik
+1. iOS ve Android için ayrı konfigürasyon
+2. Platform spesifik UI elementleri
+3. Platform kısıtlamaları gözetilmeli
+4. Store guideline'ları takip edilmeli 

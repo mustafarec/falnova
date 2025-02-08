@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:go_router/go_router.dart';
+import 'package:falnova/ui/widgets/common/custom_app_bar.dart';
 
 final fortuneHistoryProvider =
     FutureProvider.autoDispose<List<FortuneReading>>((ref) async {
@@ -40,8 +41,10 @@ class _FortuneHistoryScreenState extends ConsumerState<FortuneHistoryScreen> {
     final fortuneHistoryAsync = ref.watch(fortuneHistoryProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Fal Geçmişim'),
+      appBar: CustomAppBar(
+        title: 'Fal Geçmişim',
+        showBackButton: true,
+        backgroundColor: Colors.brown.shade800,
       ),
       body: fortuneHistoryAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),

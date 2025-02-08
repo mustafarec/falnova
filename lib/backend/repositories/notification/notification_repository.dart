@@ -134,6 +134,10 @@ class NotificationRepository
     }
   }
 
+  void updateNotifications(List<model.Notification> notifications) {
+    state = AsyncValue.data(notifications);
+  }
+
   Future<void> scheduleNotifications(
       settings.NotificationSettings settings) async {
     try {

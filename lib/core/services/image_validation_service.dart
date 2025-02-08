@@ -2,8 +2,11 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 
 class ImageValidationService {
+  static final _logger = Logger();
+
   static Future<bool> isCoffeeCupImage(String imagePath) async {
     try {
       final apiKey = dotenv.env['OPENROUTER_API_KEY'] ?? '';
@@ -55,7 +58,7 @@ class ImageValidationService {
       }
       return false;
     } catch (e) {
-      print('Görüntü doğrulama hatası: $e');
+      _logger.e('Görüntü doğrulama hatası', error: e);
       return false;
     }
   }

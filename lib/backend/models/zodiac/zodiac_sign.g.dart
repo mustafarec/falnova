@@ -18,6 +18,21 @@ _$ZodiacSignImpl _$$ZodiacSignImplFromJson(Map<String, dynamic> json) =>
       characteristics: json['characteristics'] as String,
       planet: json['planet'] as String,
       quality: json['quality'] as String,
+      compatibility: (json['compatibility'] as Map<String, dynamic>?)?.map(
+            (k, e) => MapEntry(k, (e as num).toDouble()),
+          ) ??
+          const {},
+      positiveTraits: (json['positiveTraits'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      negativeTraits: (json['negativeTraits'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      luckyDay: json['luckyDay'] as String? ?? '',
+      luckyNumber: json['luckyNumber'] as String? ?? '',
+      luckyColor: json['luckyColor'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$ZodiacSignImplToJson(_$ZodiacSignImpl instance) =>
@@ -32,4 +47,10 @@ Map<String, dynamic> _$$ZodiacSignImplToJson(_$ZodiacSignImpl instance) =>
       'characteristics': instance.characteristics,
       'planet': instance.planet,
       'quality': instance.quality,
+      'compatibility': instance.compatibility,
+      'positiveTraits': instance.positiveTraits,
+      'negativeTraits': instance.negativeTraits,
+      'luckyDay': instance.luckyDay,
+      'luckyNumber': instance.luckyNumber,
+      'luckyColor': instance.luckyColor,
     };

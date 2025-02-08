@@ -1,20 +1,55 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:falnova/backend/models/astrology/horoscope.dart';
 import 'package:falnova/backend/services/fortune/gpt_service.dart';
+import 'package:falnova/backend/services/astrology/transit_service.dart';
+import 'package:falnova/backend/models/astrology/birth_chart.dart';
+import 'package:falnova/backend/models/astrology/transit_aspect.dart';
+import 'package:logger/logger.dart';
 
 final horoscopeServiceProvider = Provider((ref) => HoroscopeService(
       gptService: ref.watch(gptServiceProvider),
+      transitService: ref.watch(transitServiceProvider),
     ));
 
 class HoroscopeService {
   final GptService gptService;
+  final TransitService transitService;
+  final Map<String, Horoscope> _cache = {};
+  final Duration _cacheDuration = const Duration(hours: 24);
+  final _logger = Logger();
 
-  HoroscopeService({required this.gptService});
+  HoroscopeService({
+    required this.gptService,
+    required this.transitService,
+  });
 
-  Future<Horoscope> getDailyHoroscope(String sign) async {
+  Future<Horoscope> getDailyHoroscope(String sign,
+      {BirthChart? birthChart}) async {
     try {
+      // Önbellekte varsa ve güncel ise, önbellekten döndür
+      if (_cache.containsKey(sign)) {
+        final cachedHoroscope = _cache[sign]!;
+        if (DateTime.now().difference(cachedHoroscope.date) < _cacheDuration) {
+          return cachedHoroscope;
+        }
+      }
+
+      // Transit açıları hesapla
+      final transitAspects = birthChart != null
+          ? await transitService.calculateTransits(birthChart)
+          : [];
+
+      // Şanslı saatleri hesapla
+      final luckyHours = _calculateLuckyHours(sign);
+
+      // Öne çıkan noktaları hazırla
+      final highlights = _prepareHighlights(transitAspects);
+
+      // GPT prompt'unu hazırla
       final prompt =
           '''Sen bir astrologsun. $sign burcu için günlük yorum yapacaksın.
+      ${transitAspects.isNotEmpty ? 'Şu transit açılar mevcut:\n${transitAspects.map((t) => t.interpretation).join('\n')}' : ''}
+      
       Yanıtını tam olarak aşağıdaki formatta ver:
 
       [YORUM]
@@ -78,17 +113,59 @@ class HoroscopeService {
         scores.putIfAbsent(score, () => 5);
       }
 
-      return Horoscope(
+      final List<TransitAspect> typedTransitAspects =
+          transitAspects.map((aspect) => aspect as TransitAspect).toList();
+
+      final horoscope = Horoscope(
         sign: sign,
         dailyHoroscope: dailyHoroscope.trim(),
         date: DateTime.now(),
         scores: scores,
         luckNumber: luckNumber,
         luckColor: luckColor,
+        transitAspects: typedTransitAspects,
+        luckyHours: luckyHours,
+        highlights: highlights,
       );
+
+      // Önbelleğe kaydet
+      _cache[sign] = horoscope;
+
+      return horoscope;
     } catch (e) {
-      throw Exception('Günlük burç yorumu alınırken bir hata oluştu: $e');
+      _logger.e('Günlük burç yorumu alınırken hata oluştu', error: e);
+      rethrow;
     }
+  }
+
+  List<String> _calculateLuckyHours(String sign) {
+    final now = DateTime.now();
+    final random =
+        DateTime(now.year, now.month, now.day).millisecondsSinceEpoch;
+    final hours = <String>[];
+
+    // Her burç için günde 3 şanslı saat
+    for (var i = 0; i < 3; i++) {
+      final hour = (random + sign.hashCode + i) % 24;
+      hours.add('${hour.toString().padLeft(2, '0')}:00');
+    }
+
+    return hours..sort();
+  }
+
+  List<String> _prepareHighlights(List<dynamic> aspects) {
+    final highlights = <String>[];
+
+    for (final dynamic aspect in aspects) {
+      if (aspect is TransitAspect) {
+        if (aspect.aspectType == 'Conjunction' ||
+            aspect.aspectType == 'Opposition') {
+          highlights.add(aspect.interpretation);
+        }
+      }
+    }
+
+    return highlights;
   }
 
   int _extractScore(String line) {
@@ -99,5 +176,10 @@ class HoroscopeService {
       return score > 10 ? 10 : score;
     }
     return 5; // Varsayılan değer
+  }
+
+  // Önbelleği temizle
+  void clearCache() {
+    _cache.clear();
   }
 }

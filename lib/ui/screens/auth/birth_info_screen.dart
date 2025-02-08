@@ -32,7 +32,7 @@ class BirthInfoScreen extends HookConsumerWidget {
     // Başlangıçta kontrol et
     useEffect(() {
       Future.microtask(() async {
-        final tempData = await prefsService.getTempUserData();
+        final tempData = prefsService.getTempUserData();
         isGoogleUser.value = tempData?['is_google_user'] ?? false;
       });
       return null;

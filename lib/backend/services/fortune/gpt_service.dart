@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:logger/logger.dart';
 
 final gptServiceProvider = Provider((ref) => GptService());
 
@@ -9,6 +10,7 @@ class GptService {
   final _baseUrl = 'https://openrouter.ai/api/v1';
   final _model = 'google/gemini-2.0-pro-exp-02-05:free';
   final _apiKey = dotenv.env['OPENROUTER_API_KEY'] ?? '';
+  final _logger = Logger();
 
   Future<String> generateContent(String prompt) async {
     try {
@@ -53,8 +55,8 @@ class GptService {
         throw Exception('API yanıt vermedi: ${response.statusCode}');
       }
     } catch (e) {
-      print('API Hatası: $e');
-      print(
+      _logger.e('API Hatası: $e');
+      _logger.e(
           'API Yanıtı: ${e is DioException ? e.response?.data : 'Bilinmeyen yanıt'}');
       throw Exception('İçerik oluşturulurken bir hata oluştu: $e');
     }
@@ -115,8 +117,8 @@ class GptService {
         throw Exception('API yanıt vermedi: ${response.statusCode}');
       }
     } catch (e) {
-      print('API Hatası: $e');
-      print(
+      _logger.e('API Hatası: $e');
+      _logger.e(
           'API Yanıtı: ${e is DioException ? e.response?.data : 'Bilinmeyen yanıt'}');
       throw Exception('İçerik oluşturulurken bir hata oluştu: $e');
     }

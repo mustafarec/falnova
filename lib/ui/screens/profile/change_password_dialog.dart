@@ -134,8 +134,8 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => !_isChangingPassword,
+    return PopScope(
+      canPop: !_isChangingPassword,
       child: Dialog(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

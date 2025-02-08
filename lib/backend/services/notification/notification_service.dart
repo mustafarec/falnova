@@ -1,8 +1,6 @@
 library notification_service;
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:firebase_messaging/firebase_messaging.dart'
-    hide NotificationSettings;
 import 'package:falnova/backend/models/notification/notification.dart';
 import 'package:falnova/backend/models/notification/notification_settings.dart';
 import 'package:logger/logger.dart';

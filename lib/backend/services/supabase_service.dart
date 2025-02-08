@@ -21,7 +21,7 @@ class SupabaseService {
   }
 
   bool get isInitialized {
-    final initialized = true;
+    const initialized = true;
     _logger.d('Supabase initialized: $initialized');
     return initialized;
   }

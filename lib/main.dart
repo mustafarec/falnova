@@ -13,6 +13,8 @@ import 'package:falnova/core/providers/initialization_provider.dart';
 import 'package:logger/logger.dart';
 import 'dart:async';
 import 'package:falnova/core/services/permission_service.dart';
+import 'package:falnova/backend/services/astrology/web_helper.dart'
+    if (dart.library.ffi) 'package:falnova/backend/services/astrology/io_helper.dart';
 
 final _logger = Logger();
 
@@ -44,6 +46,14 @@ Future<SharedPreferences> initializeMinimalServices() async {
       anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
     );
     _logger.d('Supabase başlatıldı');
+
+    // 5. Swiss Ephemeris başlatma
+    await initSweph([
+      'assets/ephe/seas_18.se1',
+      'assets/ephe/sefstars.txt',
+      'assets/ephe/seasnam.txt',
+    ]);
+    _logger.d('Swiss Ephemeris başlatıldı');
 
     // Native splash screen'i biraz daha tut
     SystemChrome.setSystemUIOverlayStyle(

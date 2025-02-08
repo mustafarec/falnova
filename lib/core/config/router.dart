@@ -9,7 +9,11 @@ import 'package:falnova/ui/screens/home/home_screen.dart';
 import 'package:falnova/ui/screens/fortune/fortune_screen.dart';
 import 'package:falnova/ui/screens/fortune/fortune_result_screen.dart';
 import 'package:falnova/ui/screens/fortune/fortune_history_screen.dart';
+import 'package:falnova/ui/screens/fortune/palm_reading_screen.dart';
 import 'package:falnova/ui/screens/astrology/horoscope_screen.dart';
+import 'package:falnova/ui/screens/astrology/star_fortune_screen.dart';
+import 'package:falnova/ui/screens/astrology/birth_chart_screen.dart';
+import 'package:falnova/ui/screens/astrology/aspect_calculations_screen.dart';
 import 'package:falnova/ui/screens/notification/notification_screen.dart';
 import 'package:falnova/ui/screens/settings/notification_settings_screen.dart';
 import 'package:falnova/ui/screens/settings/settings_screen.dart';
@@ -17,6 +21,10 @@ import 'package:falnova/ui/screens/profile/profile_screen.dart';
 import 'package:falnova/ui/screens/notification/notifications_screen.dart';
 import 'package:falnova/backend/services/auth/google_auth_service.dart';
 import 'package:falnova/backend/services/supabase_service.dart';
+import 'package:falnova/ui/screens/astrology/compatibility_screen.dart';
+import 'package:falnova/ui/screens/astrology/transit_screen.dart';
+import 'package:falnova/ui/screens/astrology/house_systems_screen.dart';
+import 'package:falnova/ui/screens/astrology/ascendant_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -181,6 +189,26 @@ final routerProvider = Provider<GoRouter>((ref) {
             ),
             routes: [
               GoRoute(
+                path: 'palm',
+                pageBuilder: (context, state) => CustomTransitionPage(
+                  key: state.pageKey,
+                  child: const PalmReadingScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(1.0, 0.0),
+                        end: Offset.zero,
+                      ).animate(CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeInOut,
+                      )),
+                      child: child,
+                    );
+                  },
+                ),
+              ),
+              GoRoute(
                 path: 'history',
                 pageBuilder: (context, state) => CustomTransitionPage(
                   key: state.pageKey,
@@ -275,9 +303,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: '/horoscope/:id',
             pageBuilder: (context, state) => CustomTransitionPage(
               key: state.pageKey,
-              child: HoroscopeScreen(
-                selectedHoroscopeId: state.pathParameters['id'],
-              ),
+              child: const HoroscopeScreen(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return SlideTransition(
@@ -394,6 +420,197 @@ final routerProvider = Provider<GoRouter>((ref) {
                 return SlideTransition(
                   position: Tween<Offset>(
                     begin: begin,
+                    end: Offset.zero,
+                  ).animate(CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeInOut,
+                  )),
+                  child: child,
+                );
+              },
+            ),
+          ),
+          GoRoute(
+            path: '/astrology',
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const HoroscopeScreen(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                final begin = state.matchedLocation == '/'
+                    ? const Offset(-1.0, 0.0)
+                    : const Offset(1.0, 0.0);
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: begin,
+                    end: Offset.zero,
+                  ).animate(CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeInOut,
+                  )),
+                  child: child,
+                );
+              },
+            ),
+            routes: [
+              GoRoute(
+                path: 'birth-chart',
+                pageBuilder: (context, state) => CustomTransitionPage(
+                  key: state.pageKey,
+                  child: const BirthChartScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    final begin = state.matchedLocation == '/'
+                        ? const Offset(-1.0, 0.0)
+                        : const Offset(1.0, 0.0);
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: begin,
+                        end: Offset.zero,
+                      ).animate(CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeInOut,
+                      )),
+                      child: child,
+                    );
+                  },
+                ),
+              ),
+              GoRoute(
+                path: 'star-fortune',
+                pageBuilder: (context, state) => CustomTransitionPage(
+                  key: state.pageKey,
+                  child: const StarFortuneScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(1.0, 0.0),
+                        end: Offset.zero,
+                      ).animate(CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeInOut,
+                      )),
+                      child: child,
+                    );
+                  },
+                ),
+              ),
+              GoRoute(
+                path: 'house-systems',
+                pageBuilder: (context, state) => CustomTransitionPage(
+                  key: state.pageKey,
+                  child: const HouseSystemsScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(1.0, 0.0),
+                        end: Offset.zero,
+                      ).animate(CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeInOut,
+                      )),
+                      child: child,
+                    );
+                  },
+                ),
+              ),
+              GoRoute(
+                path: 'aspect-calculations',
+                pageBuilder: (context, state) => CustomTransitionPage(
+                  key: state.pageKey,
+                  child: const AspectCalculationsScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(1.0, 0.0),
+                        end: Offset.zero,
+                      ).animate(CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeInOut,
+                      )),
+                      child: child,
+                    );
+                  },
+                ),
+              ),
+              GoRoute(
+                path: 'ascendant',
+                pageBuilder: (context, state) => CustomTransitionPage(
+                  key: state.pageKey,
+                  child: const AscendantScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(1.0, 0.0),
+                        end: Offset.zero,
+                      ).animate(CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeInOut,
+                      )),
+                      child: child,
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          GoRoute(
+            path: '/birth-chart',
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const BirthChartScreen(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                final begin = state.matchedLocation == '/'
+                    ? const Offset(-1.0, 0.0)
+                    : const Offset(1.0, 0.0);
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: begin,
+                    end: Offset.zero,
+                  ).animate(CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeInOut,
+                  )),
+                  child: child,
+                );
+              },
+            ),
+          ),
+          GoRoute(
+            path: '/compatibility',
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const CompatibilityScreen(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1.0, 0.0),
+                    end: Offset.zero,
+                  ).animate(CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeInOut,
+                  )),
+                  child: child,
+                );
+              },
+            ),
+          ),
+          GoRoute(
+            path: '/transits',
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const TransitScreen(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1.0, 0.0),
                     end: Offset.zero,
                   ).animate(CurvedAnimation(
                     parent: animation,

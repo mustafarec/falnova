@@ -2,10 +2,8 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
-const _httpBaseUrl = 'https://www.astro.com/ftp/swisseph/ephe';
 final _logger = Logger();
 
 Future<void> initSweph(List<String> files) async {

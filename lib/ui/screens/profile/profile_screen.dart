@@ -689,9 +689,4 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       ),
     );
   }
-
-  // Şehir seçimi
-  void _handleCitySearch(WidgetRef ref, String value) {
-    ref.read(citySearchProvider.notifier).search(value);
-  }
 }

@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:sweph/sweph.dart';
+import 'package:logger/logger.dart';
 import 'web_helper.dart' if (dart.library.ffi) 'io_helper.dart';
 
 part 'zodiac_service.g.dart';
@@ -13,7 +14,7 @@ ZodiacService zodiacService(Ref ref) => ZodiacService();
 // Yükselen burç provider'ı
 @riverpod
 Future<String> ascendantSign(
-  AscendantSignRef ref, {
+  Ref ref, {
   required DateTime birthDate,
   required double latitude,
   required double longitude,
@@ -29,15 +30,26 @@ Future<String> ascendantSign(
 // Ay burcu provider'ı
 @riverpod
 Future<String> moonSign(
-  MoonSignRef ref, {
+  Ref ref, {
   required DateTime birthDate,
 }) async {
   final zodiacService = ref.watch(zodiacServiceProvider);
   return zodiacService.calculateMoonSign(birthDate);
 }
 
+@riverpod
+Future<double> zodiacCompatibility(
+  Ref ref, {
+  required String sign1,
+  required String sign2,
+}) async {
+  final zodiacService = ref.watch(zodiacServiceProvider);
+  return zodiacService.calculateCompatibility(sign1, sign2);
+}
+
 class ZodiacService {
   static bool _isInitialized = false;
+  final _logger = Logger();
 
   Future<void> initialize() async {
     if (!_isInitialized) {
@@ -49,7 +61,7 @@ class ZodiacService {
         ]);
         _isInitialized = true;
       } catch (e) {
-        print('Swiss Ephemeris başlatılamadı: $e');
+        _logger.e('Swiss Ephemeris başlatılamadı', error: e);
         rethrow;
       }
     }
@@ -174,5 +186,96 @@ class ZodiacService {
     final int dayOfYear = int.parse(DateFormat('D').format(birthDate));
     final int index = ((dayOfYear * 12) ~/ 365) % 12;
     return _getZodiacSign(index);
+  }
+
+  /// İki burç arasındaki uyumluluğu hesaplar
+  double calculateCompatibility(String sign1, String sign2) {
+    try {
+      // Burçları bul
+      final firstSign = ZodiacSign.allSigns.firstWhere((s) => s.name == sign1);
+      final secondSign = ZodiacSign.allSigns.firstWhere((s) => s.name == sign2);
+
+      // Temel uyumluluk puanı
+      double score = 0.0;
+
+      // Element uyumluluğu (0.3 puan)
+      if (firstSign.element == secondSign.element) {
+        score += 0.3;
+      } else if (_isElementCompatible(firstSign.element, secondSign.element)) {
+        score += 0.2;
+      }
+
+      // Nitelik uyumluluğu (0.2 puan)
+      if (firstSign.quality == secondSign.quality) {
+        score += 0.1;
+      } else if (_isQualityCompatible(firstSign.quality, secondSign.quality)) {
+        score += 0.2;
+      }
+
+      // Gezegen uyumluluğu (0.2 puan)
+      if (_isPlanetCompatible(firstSign.planet, secondSign.planet)) {
+        score += 0.2;
+      }
+
+      // Önceden tanımlanmış uyumluluk (0.3 puan)
+      if (firstSign.compatibility.containsKey(secondSign.name)) {
+        score += firstSign.compatibility[secondSign.name]! * 0.3;
+      }
+
+      return double.parse(score.toStringAsFixed(2));
+    } catch (e) {
+      _logger.e('Uyumluluk hesaplanamadı', error: e);
+      return 0.0;
+    }
+  }
+
+  bool _isElementCompatible(String element1, String element2) {
+    const compatibleElements = {
+      'Ateş': ['Hava'],
+      'Hava': ['Ateş'],
+      'Toprak': ['Su'],
+      'Su': ['Toprak'],
+    };
+
+    return compatibleElements[element1]?.contains(element2) ?? false;
+  }
+
+  bool _isQualityCompatible(String quality1, String quality2) {
+    const compatibleQualities = {
+      'Öncü': ['Sabit'],
+      'Sabit': ['Değişken'],
+      'Değişken': ['Öncü'],
+    };
+
+    return compatibleQualities[quality1]?.contains(quality2) ?? false;
+  }
+
+  bool _isPlanetCompatible(String planet1, String planet2) {
+    const compatiblePlanets = {
+      'Güneş': ['Ay', 'Mars', 'Jüpiter'],
+      'Ay': ['Güneş', 'Venüs', 'Neptün'],
+      'Merkür': ['Venüs', 'Uranüs'],
+      'Venüs': ['Mars', 'Merkür', 'Ay'],
+      'Mars': ['Venüs', 'Güneş', 'Plüton'],
+      'Jüpiter': ['Güneş', 'Satürn'],
+      'Satürn': ['Jüpiter', 'Uranüs'],
+      'Uranüs': ['Merkür', 'Satürn'],
+      'Neptün': ['Ay', 'Plüton'],
+      'Plüton': ['Mars', 'Neptün'],
+    };
+
+    // Gezegen birleşik ise (örn: Mars/Plüton) ayrı ayrı kontrol et
+    final planets1 = planet1.split('/');
+    final planets2 = planet2.split('/');
+
+    for (final p1 in planets1) {
+      for (final p2 in planets2) {
+        if (compatiblePlanets[p1]?.contains(p2) ?? false) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 }

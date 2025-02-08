@@ -178,8 +178,9 @@ class NotificationScreen extends HookConsumerWidget {
                       final updatedList =
                           List<model.Notification>.from(notifications)
                             ..removeWhere((n) => n.id == notification.id);
-                      ref.read(notificationRepositoryProvider.notifier).state =
-                          AsyncData(updatedList);
+                      ref
+                          .read(notificationRepositoryProvider.notifier)
+                          .updateNotifications(updatedList);
 
                       // Sonra veritabanından sil
                       await ref

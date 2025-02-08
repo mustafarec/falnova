@@ -30,6 +30,12 @@ mixin _$ZodiacSign {
   String get characteristics => throw _privateConstructorUsedError;
   String get planet => throw _privateConstructorUsedError;
   String get quality => throw _privateConstructorUsedError;
+  Map<String, double> get compatibility => throw _privateConstructorUsedError;
+  List<String> get positiveTraits => throw _privateConstructorUsedError;
+  List<String> get negativeTraits => throw _privateConstructorUsedError;
+  String get luckyDay => throw _privateConstructorUsedError;
+  String get luckyNumber => throw _privateConstructorUsedError;
+  String get luckyColor => throw _privateConstructorUsedError;
 
   /// Serializes this ZodiacSign to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -57,7 +63,13 @@ abstract class $ZodiacSignCopyWith<$Res> {
       int endDay,
       String characteristics,
       String planet,
-      String quality});
+      String quality,
+      Map<String, double> compatibility,
+      List<String> positiveTraits,
+      List<String> negativeTraits,
+      String luckyDay,
+      String luckyNumber,
+      String luckyColor});
 }
 
 /// @nodoc
@@ -85,6 +97,12 @@ class _$ZodiacSignCopyWithImpl<$Res, $Val extends ZodiacSign>
     Object? characteristics = null,
     Object? planet = null,
     Object? quality = null,
+    Object? compatibility = null,
+    Object? positiveTraits = null,
+    Object? negativeTraits = null,
+    Object? luckyDay = null,
+    Object? luckyNumber = null,
+    Object? luckyColor = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -127,6 +145,30 @@ class _$ZodiacSignCopyWithImpl<$Res, $Val extends ZodiacSign>
           ? _value.quality
           : quality // ignore: cast_nullable_to_non_nullable
               as String,
+      compatibility: null == compatibility
+          ? _value.compatibility
+          : compatibility // ignore: cast_nullable_to_non_nullable
+              as Map<String, double>,
+      positiveTraits: null == positiveTraits
+          ? _value.positiveTraits
+          : positiveTraits // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      negativeTraits: null == negativeTraits
+          ? _value.negativeTraits
+          : negativeTraits // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      luckyDay: null == luckyDay
+          ? _value.luckyDay
+          : luckyDay // ignore: cast_nullable_to_non_nullable
+              as String,
+      luckyNumber: null == luckyNumber
+          ? _value.luckyNumber
+          : luckyNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      luckyColor: null == luckyColor
+          ? _value.luckyColor
+          : luckyColor // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -149,7 +191,13 @@ abstract class _$$ZodiacSignImplCopyWith<$Res>
       int endDay,
       String characteristics,
       String planet,
-      String quality});
+      String quality,
+      Map<String, double> compatibility,
+      List<String> positiveTraits,
+      List<String> negativeTraits,
+      String luckyDay,
+      String luckyNumber,
+      String luckyColor});
 }
 
 /// @nodoc
@@ -175,6 +223,12 @@ class __$$ZodiacSignImplCopyWithImpl<$Res>
     Object? characteristics = null,
     Object? planet = null,
     Object? quality = null,
+    Object? compatibility = null,
+    Object? positiveTraits = null,
+    Object? negativeTraits = null,
+    Object? luckyDay = null,
+    Object? luckyNumber = null,
+    Object? luckyColor = null,
   }) {
     return _then(_$ZodiacSignImpl(
       name: null == name
@@ -217,6 +271,30 @@ class __$$ZodiacSignImplCopyWithImpl<$Res>
           ? _value.quality
           : quality // ignore: cast_nullable_to_non_nullable
               as String,
+      compatibility: null == compatibility
+          ? _value._compatibility
+          : compatibility // ignore: cast_nullable_to_non_nullable
+              as Map<String, double>,
+      positiveTraits: null == positiveTraits
+          ? _value._positiveTraits
+          : positiveTraits // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      negativeTraits: null == negativeTraits
+          ? _value._negativeTraits
+          : negativeTraits // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      luckyDay: null == luckyDay
+          ? _value.luckyDay
+          : luckyDay // ignore: cast_nullable_to_non_nullable
+              as String,
+      luckyNumber: null == luckyNumber
+          ? _value.luckyNumber
+          : luckyNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      luckyColor: null == luckyColor
+          ? _value.luckyColor
+          : luckyColor // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -234,7 +312,16 @@ class _$ZodiacSignImpl implements _ZodiacSign {
       required this.endDay,
       required this.characteristics,
       required this.planet,
-      required this.quality});
+      required this.quality,
+      final Map<String, double> compatibility = const {},
+      final List<String> positiveTraits = const [],
+      final List<String> negativeTraits = const [],
+      this.luckyDay = '',
+      this.luckyNumber = '',
+      this.luckyColor = ''})
+      : _compatibility = compatibility,
+        _positiveTraits = positiveTraits,
+        _negativeTraits = negativeTraits;
 
   factory _$ZodiacSignImpl.fromJson(Map<String, dynamic> json) =>
       _$$ZodiacSignImplFromJson(json);
@@ -259,10 +346,46 @@ class _$ZodiacSignImpl implements _ZodiacSign {
   final String planet;
   @override
   final String quality;
+  final Map<String, double> _compatibility;
+  @override
+  @JsonKey()
+  Map<String, double> get compatibility {
+    if (_compatibility is EqualUnmodifiableMapView) return _compatibility;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_compatibility);
+  }
+
+  final List<String> _positiveTraits;
+  @override
+  @JsonKey()
+  List<String> get positiveTraits {
+    if (_positiveTraits is EqualUnmodifiableListView) return _positiveTraits;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_positiveTraits);
+  }
+
+  final List<String> _negativeTraits;
+  @override
+  @JsonKey()
+  List<String> get negativeTraits {
+    if (_negativeTraits is EqualUnmodifiableListView) return _negativeTraits;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_negativeTraits);
+  }
+
+  @override
+  @JsonKey()
+  final String luckyDay;
+  @override
+  @JsonKey()
+  final String luckyNumber;
+  @override
+  @JsonKey()
+  final String luckyColor;
 
   @override
   String toString() {
-    return 'ZodiacSign(name: $name, element: $element, symbol: $symbol, startMonth: $startMonth, startDay: $startDay, endMonth: $endMonth, endDay: $endDay, characteristics: $characteristics, planet: $planet, quality: $quality)';
+    return 'ZodiacSign(name: $name, element: $element, symbol: $symbol, startMonth: $startMonth, startDay: $startDay, endMonth: $endMonth, endDay: $endDay, characteristics: $characteristics, planet: $planet, quality: $quality, compatibility: $compatibility, positiveTraits: $positiveTraits, negativeTraits: $negativeTraits, luckyDay: $luckyDay, luckyNumber: $luckyNumber, luckyColor: $luckyColor)';
   }
 
   @override
@@ -283,13 +406,41 @@ class _$ZodiacSignImpl implements _ZodiacSign {
             (identical(other.characteristics, characteristics) ||
                 other.characteristics == characteristics) &&
             (identical(other.planet, planet) || other.planet == planet) &&
-            (identical(other.quality, quality) || other.quality == quality));
+            (identical(other.quality, quality) || other.quality == quality) &&
+            const DeepCollectionEquality()
+                .equals(other._compatibility, _compatibility) &&
+            const DeepCollectionEquality()
+                .equals(other._positiveTraits, _positiveTraits) &&
+            const DeepCollectionEquality()
+                .equals(other._negativeTraits, _negativeTraits) &&
+            (identical(other.luckyDay, luckyDay) ||
+                other.luckyDay == luckyDay) &&
+            (identical(other.luckyNumber, luckyNumber) ||
+                other.luckyNumber == luckyNumber) &&
+            (identical(other.luckyColor, luckyColor) ||
+                other.luckyColor == luckyColor));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, element, symbol,
-      startMonth, startDay, endMonth, endDay, characteristics, planet, quality);
+  int get hashCode => Object.hash(
+      runtimeType,
+      name,
+      element,
+      symbol,
+      startMonth,
+      startDay,
+      endMonth,
+      endDay,
+      characteristics,
+      planet,
+      quality,
+      const DeepCollectionEquality().hash(_compatibility),
+      const DeepCollectionEquality().hash(_positiveTraits),
+      const DeepCollectionEquality().hash(_negativeTraits),
+      luckyDay,
+      luckyNumber,
+      luckyColor);
 
   /// Create a copy of ZodiacSign
   /// with the given fields replaced by the non-null parameter values.
@@ -318,7 +469,13 @@ abstract class _ZodiacSign implements ZodiacSign {
       required final int endDay,
       required final String characteristics,
       required final String planet,
-      required final String quality}) = _$ZodiacSignImpl;
+      required final String quality,
+      final Map<String, double> compatibility,
+      final List<String> positiveTraits,
+      final List<String> negativeTraits,
+      final String luckyDay,
+      final String luckyNumber,
+      final String luckyColor}) = _$ZodiacSignImpl;
 
   factory _ZodiacSign.fromJson(Map<String, dynamic> json) =
       _$ZodiacSignImpl.fromJson;
@@ -343,6 +500,18 @@ abstract class _ZodiacSign implements ZodiacSign {
   String get planet;
   @override
   String get quality;
+  @override
+  Map<String, double> get compatibility;
+  @override
+  List<String> get positiveTraits;
+  @override
+  List<String> get negativeTraits;
+  @override
+  String get luckyDay;
+  @override
+  String get luckyNumber;
+  @override
+  String get luckyColor;
 
   /// Create a copy of ZodiacSign
   /// with the given fields replaced by the non-null parameter values.

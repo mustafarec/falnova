@@ -6,7 +6,7 @@ part of 'city_search_screen.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filteredCitiesHash() => r'0db0be503e190fa2b7d98626730f35c6af3fa2ab';
+String _$filteredCitiesHash() => r'a5a5dcf421c8e0ea93c7f5eec698675de20ef9f5';
 
 /// See also [filteredCities].
 @ProviderFor(filteredCities)

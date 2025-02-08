@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:falnova/backend/services/preferences_service.dart';
 
 final _logger = Logger();
-final _supabase = Supabase.instance.client;
 
 class SignupScreen extends HookConsumerWidget {
   const SignupScreen({super.key});

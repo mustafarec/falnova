@@ -170,7 +170,7 @@ class FCMService {
           switch (type) {
             case 'coffee':
             case 'coffee_reminder':
-              context.push('/fortune/reading/${notificationId}');
+              context.push('/fortune/reading/$notificationId');
               break;
             case 'horoscope':
             case 'horoscope_reminder':

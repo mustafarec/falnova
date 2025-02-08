@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:badges/badges.dart' as badges;
 import 'package:falnova/backend/repositories/fortune/fortune_repository.dart';
-import 'package:falnova/backend/repositories/notification/notification_repository.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:falnova/ui/widgets/common/custom_app_bar.dart';
@@ -15,15 +13,20 @@ import 'package:falnova/core/services/image_validation_service.dart';
 class FortuneScreen extends HookConsumerWidget {
   const FortuneScreen({super.key});
 
+  static const primaryColor = Colors.brown;
+  static const secondaryColor = Colors.brown;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedImage = useState<File?>(null);
     final isLoading = useState(false);
-    final notifications = ref.watch(notificationRepositoryProvider);
-    final unreadCount = notifications.whenOrNull(
-          data: (notifications) => notifications.where((n) => !n.isRead).length,
-        ) ??
-        0;
+    final theme = Theme.of(context).copyWith(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primaryColor,
+        primary: primaryColor,
+        secondary: secondaryColor,
+      ),
+    );
 
     Future<void> pickImage(ImageSource source) async {
       final picker = ImagePicker();
@@ -94,114 +97,280 @@ class FortuneScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Kahve Falı',
-        showBackButton: true,
+        showBackButton: false,
+        showNotification: true,
+        backgroundColor: Colors.brown.shade800,
         actions: [
           IconButton(
-            icon: badges.Badge(
-              showBadge: unreadCount > 0,
-              badgeContent: Text(
-                unreadCount.toString(),
-                style: const TextStyle(color: Colors.white),
-              ),
-              child: const Icon(Icons.notifications),
-            ),
-            onPressed: () => context.push('/notifications'),
-          ),
-          IconButton(
-            icon: const Icon(Icons.history),
+            icon: const Icon(Icons.history, color: Colors.white),
             onPressed: () => context.push('/fortune/history'),
           ),
         ],
       ),
       body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (selectedImage.value == null) ...[
-                  const Icon(
-                    Icons.coffee,
-                    size: 64,
-                    color: Colors.brown,
+          CustomScrollView(
+            slivers: [
+              // Hero Section
+              SliverToBoxAdapter(
+                child: Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.brown.shade800,
+                        Colors.brown.shade600,
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'Fincan Fotoğrafını Yükleyin',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Fincanını Seç',
+                        style: theme.textTheme.headlineMedium?.copyWith(
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Fincanının içini net görebileceğimiz bir fotoğraf çek veya seç',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: Colors.white.withOpacity(0.9),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Fincanınızın içini net görebileceğimiz bir fotoğraf çekin veya seçin',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                ] else ...[
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          Image.file(
-                            selectedImage.value!,
-                            fit: BoxFit.cover,
-                          ),
-                          Positioned(
-                            top: 8,
-                            right: 8,
-                            child: IconButton(
-                              onPressed: () => selectedImage.value = null,
-                              icon: const Icon(Icons.close),
-                              style: IconButton.styleFrom(
-                                backgroundColor: Colors.black54,
-                                foregroundColor: Colors.white,
+                ),
+              ),
+
+              // Fotoğraf Seçimi veya Önizleme
+              SliverPadding(
+                padding: const EdgeInsets.all(16),
+                sliver: SliverToBoxAdapter(
+                  child: selectedImage.value == null
+                      ? Column(
+                          children: [
+                            Container(
+                              height: 300,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    blurRadius: 10,
+                                    spreadRadius: 2,
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.coffee,
+                                    size: 64,
+                                    color: theme.colorScheme.primary,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    'Fotoğraf Yükle',
+                                    style: theme.textTheme.titleLarge?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 24),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      FilledButton.icon(
+                                        onPressed: () =>
+                                            pickImage(ImageSource.camera),
+                                        icon: const Icon(Icons.camera_alt),
+                                        label: const Text('Fotoğraf Çek'),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      FilledButton.icon(
+                                        onPressed: () =>
+                                            pickImage(ImageSource.gallery),
+                                        icon: const Icon(Icons.photo_library),
+                                        label: const Text('Galeriden Seç'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
+                            const SizedBox(height: 24),
+                            Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.tips_and_updates,
+                                          color: theme.colorScheme.primary,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          'Fotoğraf Çekme İpuçları',
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    _buildTipItem(
+                                      icon: Icons.light_mode,
+                                      text:
+                                          'İyi aydınlatılmış bir ortamda çekim yapın',
+                                      theme: theme,
+                                    ),
+                                    _buildTipItem(
+                                      icon: Icons.camera_enhance,
+                                      text:
+                                          'Fincanın içini net gösterecek bir açı seçin',
+                                      theme: theme,
+                                    ),
+                                    _buildTipItem(
+                                      icon: Icons.coffee,
+                                      text:
+                                          'Fincanın tamamen boşalmış olduğundan emin olun',
+                                      theme: theme,
+                                    ),
+                                    _buildTipItem(
+                                      icon: Icons.center_focus_strong,
+                                      text:
+                                          'Fincan desenlerinin net görünmesine dikkat edin',
+                                      theme: theme,
+                                    ),
+                                    _buildTipItem(
+                                      icon: Icons.photo_size_select_large,
+                                      text:
+                                          'Fincanı yakından çekin, gereksiz boşluk bırakmayın',
+                                      theme: theme,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: Stack(
+                            children: [
+                              AspectRatio(
+                                aspectRatio: 1,
+                                child: Image.file(
+                                  selectedImage.value!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: IconButton.filled(
+                                  onPressed: () => selectedImage.value = null,
+                                  icon: const Icon(Icons.close),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 16,
+                                left: 16,
+                                right: 16,
+                                child: FilledButton.icon(
+                                  onPressed: interpretFortune,
+                                  icon: const Icon(Icons.auto_awesome),
+                                  label: const Text('Falımı Yorumla'),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton.icon(
-                    onPressed: isLoading.value ? null : interpretFortune,
-                    icon: const Icon(Icons.auto_awesome),
-                    label: const Text('Falımı Yorumla'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(200, 48),
-                    ),
-                  ),
-                ],
-                const SizedBox(height: 32),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () => pickImage(ImageSource.camera),
-                      icon: const Icon(Icons.camera_alt),
-                      label: const Text('Fotoğraf Çek'),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(160, 48),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    ElevatedButton.icon(
-                      onPressed: () => pickImage(ImageSource.gallery),
-                      icon: const Icon(Icons.photo_library),
-                      label: const Text('Galeriden Seç'),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(160, 48),
-                      ),
-                    ),
-                  ],
+                        ),
                 ),
-              ],
-            ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.all(16),
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: 24),
+                      Text(
+                        'Diğer Fal Türleri',
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Card(
+                        child: InkWell(
+                          onTap: () => context.push('/fortune/palm'),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: theme.colorScheme.primaryContainer,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Icon(
+                                    Icons.back_hand,
+                                    color: theme.colorScheme.primary,
+                                    size: 32,
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'El Falı',
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        'El çizgilerinizden geleceğinizi öğrenin',
+                                        style: theme.textTheme.bodyMedium
+                                            ?.copyWith(
+                                          color: theme
+                                              .textTheme.bodyMedium?.color
+                                              ?.withOpacity(0.7),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: theme.colorScheme.primary,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
           if (isLoading.value)
             Container(
@@ -213,6 +382,32 @@ class FortuneScreen extends HookConsumerWidget {
                 ),
               ),
             ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTipItem({
+    required IconData icon,
+    required String text,
+    required ThemeData theme,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 20,
+            color: theme.colorScheme.primary.withOpacity(0.7),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              text,
+              style: theme.textTheme.bodyMedium,
+            ),
+          ),
         ],
       ),
     );

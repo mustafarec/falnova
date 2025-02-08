@@ -16,6 +16,12 @@ class ZodiacSign with _$ZodiacSign {
     required String characteristics,
     required String planet,
     required String quality,
+    @Default({}) Map<String, double> compatibility,
+    @Default([]) List<String> positiveTraits,
+    @Default([]) List<String> negativeTraits,
+    @Default('') String luckyDay,
+    @Default('') String luckyNumber,
+    @Default('') String luckyColor,
   }) = _ZodiacSign;
 
   factory ZodiacSign.fromJson(Map<String, dynamic> json) =>
@@ -33,6 +39,18 @@ class ZodiacSign with _$ZodiacSign {
           characteristics: 'Lider, enerjik, cesur',
           planet: 'Mars',
           quality: 'Öncü',
+          positiveTraits: ['Cesur', 'Enerjik', 'Lider ruhlu', 'Dinamik'],
+          negativeTraits: ['Sabırsız', 'Agresif', 'Bencil'],
+          luckyDay: 'Salı',
+          luckyNumber: '9',
+          luckyColor: 'Kırmızı',
+          compatibility: {
+            'Aslan': 0.9,
+            'Yay': 0.9,
+            'İkizler': 0.8,
+            'Terazi': 0.8,
+            'Kova': 0.7,
+          },
         ),
         const ZodiacSign(
           name: 'Boğa',

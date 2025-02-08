@@ -47,4 +47,15 @@ class AiService {
       throw Exception('Günlük burç yorumu oluşturulurken bir hata oluştu: $e');
     }
   }
+
+  Future<String> generateContentWithImage(
+      String prompt, String base64Image) async {
+    try {
+      final response =
+          await _gptService.generateContentWithImage(prompt, base64Image);
+      return response;
+    } catch (e) {
+      throw Exception('Görüntü analizi sırasında bir hata oluştu: $e');
+    }
+  }
 }

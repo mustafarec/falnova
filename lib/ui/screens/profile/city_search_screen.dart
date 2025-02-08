@@ -26,7 +26,7 @@ class CityList extends _$CityList {
 }
 
 @riverpod
-List<City> filteredCities(AutoDisposeRef ref) {
+List<City> filteredCities(Ref ref) {
   final cities = ref.watch(cityListProvider);
   final searchQuery = ref.watch(citySearchProvider).toLowerCase();
 
