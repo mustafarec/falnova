@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+---
+# Backend Servis Kuralları
+
+Applies to: lib/backend/**/*.dart
+
+Bu kurallar, backend servislerin güvenli ve performanslı olmasını sağlar.
+
+## Güvenlik
+- API anahtarları .env dosyasında saklanmalı
+- Hassas veriler şifrelenmeli
+- Firebase güvenlik kuralları kontrol edilmeli
+- Token yönetimi güvenli şekilde yapılmalı
+
+## Veri Yönetimi
+- Supabase kullanılmalı
+- Offline storage implement edilmeli
+- Cache stratejisi belirlenmeli
+- Veri şifreleme uygulanmalı
+
+## Hata Yönetimi
+- Custom error handler kullanılmalı
+- Hata mesajları lokalize edilmeli
+- Retry mekanizması implement edilmeli
+- Graceful degradation uygulanmalı
+
+## API İstekleri
+- Timeout değerleri ayarlanmalı
+- Retry mekanizması implement edilmeli
+- Offline mod desteklenmeli
+- API hataları düzgün yönetilmeli 

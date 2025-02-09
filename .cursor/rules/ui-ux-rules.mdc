@@ -1,0 +1,29 @@
+# UI/UX Kuralları
+
+Applies to: lib/ui/**/*.dart
+
+Bu kurallar, kullanıcı arayüzünün tutarlı ve modern olmasını sağlar.
+
+## Material Design
+- Material 3 guideline takip edilmeli
+- Dark/Light tema desteklenmeli
+- Responsive tasarım uygulanmalı
+- Accessibility desteklenmeli
+
+## Performans
+- Gereksiz build'ler önlenmeli
+- const widget'lar kullanılmalı
+- ListView.builder tercih edilmeli
+- Image.network yerine CachedNetworkImage kullanılmalı
+
+## Lokalizasyon
+- easy_localization kullanılmalı
+- Tüm stringler lokalize edilmeli
+- RTL desteği sağlanmalı
+- Tarih/saat formatları lokalize edilmeli
+
+## Asset Yönetimi
+- SVG tercih edilmeli
+- Asset boyutları optimize edilmeli
+- Font boyutları minimize edilmeli
+- Image caching implement edilmeli 

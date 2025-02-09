@@ -1,0 +1,31 @@
+---
+description: 
+globs: 
+---
+# Flutter/Dart Stil Kuralları
+
+Applies to: lib/**/*.dart
+
+Bu kurallar, Flutter ve Dart kodunun tutarlı ve kaliteli olmasını sağlar.
+
+## Genel Kurallar
+- Her dosya UTF-8 ile kodlanmalı
+- Her dosya newline ile bitmeli
+- Satır uzunluğu maksimum 80 karakter olmalı
+- Girintiler 2 boşluk kullanmalı
+
+## Constructor Kullanımı
+- const constructor kullanımı zorunlu
+- final değişkenler tercih edilmeli
+- Tek satırlık fonksiyonlarda => kullanılmalı
+
+## Code Generation
+- Freezed için @freezed annotation kullanılmalı
+- JsonSerializable için snake_case kullanılmalı
+- build_runner build --delete-conflicting-outputs çalıştırılmalı
+
+## State Management
+- Riverpod kullanılmalı
+- @riverpod annotation kullanılmalı
+- StateProvider yerine AsyncNotifierProvider tercih edilmeli
+- ref.watch yerine ref.listen kullanılmalı 

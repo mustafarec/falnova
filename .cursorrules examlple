@@ -1,5 +1,132 @@
 # FalNova Cursor Kuralları
 
+## 🎯 Proje Tanımı
+FalNova, Flutter ile geliştirilmiş bir kahve falı ve astroloji uygulamasıdır.
+Bu kurallar, projenin tutarlı ve kaliteli geliştirilmesini sağlamak için oluşturulmuştur.
+
+## 📁 Dosya Yapısı Kuralları
+{
+  "description": "Proje dosya yapısı kuralları",
+  "patterns": ["lib/**/*.dart"],
+  "rules": [
+    "Her dosya UTF-8 ile kodlanmalı",
+    "Her dosya newline ile bitmeli",
+    "Satır uzunluğu maksimum 80 karakter olmalı",
+    "Girintiler 2 boşluk kullanmalı",
+    "Trailing whitespace olmamalı"
+  ]
+}
+
+## 🎨 Dart/Flutter Stil Kuralları
+{
+  "description": "Dart ve Flutter kod stil kuralları",
+  "patterns": ["lib/**/*.dart"],
+  "rules": [
+    "const constructor kullanımı zorunlu",
+    "final değişkenler tercih edilmeli",
+    "Tek satırlık fonksiyonlarda => kullanılmalı",
+    "Trailing comma kullanılmalı",
+    "Freezed için @freezed annotation kullanılmalı",
+    "JsonSerializable için snake_case kullanılmalı"
+  ]
+}
+
+## 🔄 Riverpod Kuralları
+{
+  "description": "Riverpod state management kuralları",
+  "patterns": ["lib/**/*_provider.dart", "lib/**/*_service.dart"],
+  "rules": [
+    "@riverpod annotation kullanılmalı",
+    "StateProvider yerine AsyncNotifierProvider tercih edilmeli",
+    "ref.watch yerine ref.listen kullanılmalı",
+    "Asenkron işlemlerde AsyncValue kullanılmalı"
+  ]
+}
+
+## 🧪 Test Kuralları
+{
+  "description": "Test yazım kuralları",
+  "patterns": ["test/**/*_test.dart"],
+  "rules": [
+    "Test coverage %80'in üzerinde olmalı",
+    "Her public API için unit test yazılmalı",
+    "Widget testleri için golden test kullanılmalı",
+    "Integration testler için test senaryoları dokümante edilmeli"
+  ]
+}
+
+## 🔒 Güvenlik Kuralları
+{
+  "description": "Güvenlik ve gizlilik kuralları",
+  "patterns": ["lib/**/*.dart"],
+  "rules": [
+    "API anahtarları .env dosyasında saklanmalı",
+    "Hassas veriler şifrelenmeli",
+    "Firebase güvenlik kuralları kontrol edilmeli",
+    "Token yönetimi güvenli şekilde yapılmalı"
+  ]
+}
+
+## 📱 UI/UX Kuralları
+{
+  "description": "Kullanıcı arayüzü kuralları",
+  "patterns": ["lib/ui/**/*.dart"],
+  "rules": [
+    "Material 3 guideline takip edilmeli",
+    "Dark/Light tema desteklenmeli",
+    "Responsive tasarım uygulanmalı",
+    "Accessibility desteklenmeli"
+  ]
+}
+
+## 🌍 Lokalizasyon Kuralları
+{
+  "description": "Çoklu dil desteği kuralları",
+  "patterns": ["lib/**/*.dart", "assets/translations/*.json"],
+  "rules": [
+    "easy_localization kullanılmalı",
+    "Tüm stringler lokalize edilmeli",
+    "RTL desteği sağlanmalı",
+    "Tarih/saat formatları lokalize edilmeli"
+  ]
+}
+
+## 🚀 Performans Kuralları
+{
+  "description": "Performans optimizasyon kuralları",
+  "patterns": ["lib/**/*.dart"],
+  "rules": [
+    "Gereksiz build'ler önlenmeli",
+    "Büyük asset'ler optimize edilmeli",
+    "Lazy loading kullanılmalı",
+    "Cache mekanizması implement edilmeli"
+  ]
+}
+
+## 📝 Dokümantasyon Kuralları
+{
+  "description": "Kod dokümantasyon kuralları",
+  "patterns": ["lib/**/*.dart", "*.md"],
+  "rules": [
+    "Tüm public API'ler dokümante edilmeli",
+    "README.md güncel tutulmalı",
+    "CHANGELOG.md düzenli güncellenmeli",
+    "Progress.md takip edilmeli"
+  ]
+}
+
+## 🔄 CI/CD Kuralları
+{
+  "description": "Sürekli entegrasyon ve dağıtım kuralları",
+  "patterns": [".github/workflows/*.yml"],
+  "rules": [
+    "Her PR öncesi testler çalıştırılmalı",
+    "build_runner build --delete-conflicting-outputs çalıştırılmalı",
+    "Flutter analyze temiz olmalı",
+    "Flutter test başarılı olmalı"
+  ]
+}
+
 ## 📱 Genel Kurallar
 
 1. Her dosya UTF-8 ile kodlanmalı
@@ -120,12 +247,6 @@
 2. Crashlytics implement edilmeli
 3. Performance monitoring yapılmalı
 4. User engagement takip edilmeli
-
-## 🌍 Lokalizasyon
-1. easy_localization kullanılmalı
-2. Tüm stringler lokalize edilmeli
-3. RTL desteği sağlanmalı
-4. Tarih/saat formatları lokalize edilmeli
 
 ## 🎨 Asset Yönetimi
 1. SVG tercih edilmeli

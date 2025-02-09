@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+---
+# Platform Spesifik Kurallar
+
+Applies to: android/**, ios/**, lib/**/*.dart
+
+Bu kurallar, platform özelinde dikkat edilmesi gereken noktaları tanımlar.
+
+## Android Kuralları
+- minSdkVersion 21 olmalı
+- targetSdkVersion güncel tutulmalı
+- Permissions doğru yönetilmeli
+- ProGuard kuralları tanımlanmalı
+
+## iOS Kuralları
+- Minimum iOS versiyonu 13.0 olmalı
+- Pod versiyonları sabitlenmeli
+- Privacy descriptions eksiksiz olmalı
+- Signing ayarları yapılandırılmalı
+
+## Ortak Kurallar
+- Platform spesifik UI elementleri kullanılmalı
+- Platform kısıtlamaları gözetilmeli
+- Store guideline'ları takip edilmeli
+- Native özellikler doğru kullanılmalı
+
+## Asset Yönetimi
+- Platform özelinde ikon setleri hazırlanmalı
+- Splash screen her boyut için optimize edilmeli
+- Native dosya formatları kullanılmalı
+- Platform spesifik font yönetimi yapılmalı 

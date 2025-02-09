@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+---
+# Dokümantasyon Kuralları
+
+Applies to: lib/**/*.dart, *.md
+
+Bu kurallar, kod ve proje dokümantasyonunun standartlarını belirler.
+
+## Kod Dokümantasyonu
+- Tüm public API'ler dokümante edilmeli
+- Karmaşık algoritmalar açıklanmalı
+- Parametreler ve dönüş değerleri belirtilmeli
+- Örnekler eklenmelidir
+
+## Proje Dokümantasyonu
+- README.md güncel tutulmalı
+- CHANGELOG.md düzenli güncellenmeli
+- Progress.md takip edilmeli
+- Kurulum adımları detaylı açıklanmalı
+
+## API Dokümantasyonu
+- API endpoint'leri dokümante edilmeli
+- Request/Response örnekleri eklenmeli
+- Hata kodları açıklanmalı
+- Postman collection güncel tutulmalı
+
+## Geliştirici Rehberi
+- Kod standartları belirtilmeli
+- Git workflow tanımlanmalı
+- Deployment süreci açıklanmalı
+- Troubleshooting rehberi oluşturulmalı 

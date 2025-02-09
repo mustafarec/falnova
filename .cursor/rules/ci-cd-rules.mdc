@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+---
+# CI/CD Kuralları
+
+Applies to: .github/workflows/*.yml
+
+Bu kurallar, sürekli entegrasyon ve dağıtım süreçlerini tanımlar.
+
+## Derleme Öncesi
+- Her PR öncesi testler çalıştırılmalı
+- build_runner build --delete-conflicting-outputs çalıştırılmalı
+- Flutter analyze temiz olmalı
+- Flutter test başarılı olmalı
+
+## Versiyon Yönetimi
+- Semantic versioning kullanılmalı
+- Otomatik versiyon artırımı yapılmalı
+- CHANGELOG.md düzenli güncellenmeli
+- Git tag'leri oluşturulmalı
+
+## Release Süreci
+- Otomatik release notes oluşturulmalı
+- Test coverage raporlanmalı
+- APK ve IPA dosyaları otomatik oluşturulmalı
+- Firebase App Distribution kullanılmalı
+
+## Monitoring
+- Firebase Analytics entegre edilmeli
+- Crashlytics raporları takip edilmeli
+- Performance monitoring yapılmalı
+- User engagement ölçülmeli 

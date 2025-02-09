@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+---
+# Test Kuralları
+
+Applies to: test/**/*.dart
+
+Bu kurallar, test kapsamını ve kalitesini sağlar.
+
+## Genel Test Kuralları
+- Test coverage %80'in üzerinde olmalı
+- Her public API için unit test yazılmalı
+- Widget testleri için golden test kullanılmalı
+- Integration testler için test senaryoları dokümante edilmeli
+
+## Unit Test
+- Her servis için test yazılmalı
+- Mock kullanımı tercih edilmeli
+- Test grupları organize edilmeli
+- setUp ve tearDown kullanılmalı
+
+## Widget Test
+- Her widget için test yazılmalı
+- Pump ve pumpAndSettle doğru kullanılmalı
+- find.byType ve find.byKey tercih edilmeli
+- Ekran boyutları test edilmeli
+
+## Integration Test
+- Kritik akışlar test edilmeli
+- Network bağlantısı simüle edilmeli
+- Hata durumları test edilmeli
+- Performans metrikleri ölçülmeli 
